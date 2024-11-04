@@ -38,3 +38,82 @@ class TestVarasto(unittest.TestCase):
 
         # varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 4)
+
+    def test_adding_over_capacity(self):
+        self.varasto.lisaa_varastoon(12)
+
+        self.assertAlmostEqual(self.varasto.saldo, 10)
+    
+    def test_removing_more_than_capacity(self):
+        self.varasto.lisaa_varastoon(3)
+
+        self.varasto.ota_varastosta(5)
+
+        self.assertAlmostEqual(self.varasto.saldo, 0)
+
+    def test_creating_with_negative_capacity(self):
+        varasto = Varasto(-3)
+
+        self.assertAlmostEqual(varasto.tilavuus, 0)
+
+    def test_creating_with_negative_balance(self):
+        varasto = Varasto(10, -5)
+
+        self.assertAlmostEqual(varasto.saldo, 0)
+
+    def test_adding_zero_balance(self):
+        self.varasto.lisaa_varastoon(0)
+
+        self.assertAlmostEqual(self.varasto.saldo, 0)
+
+    def test_adding_zero_balance2(self):
+        self.varasto.lisaa_varastoon(0)
+
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 10)
+
+    def test_removing_zero_balance(self):
+        self.varasto.lisaa_varastoon(8)
+
+        self.varasto.ota_varastosta(0)
+
+        self.assertAlmostEqual(self.varasto.saldo, 8)
+
+    def test_calculating_available_space(self):
+        self.varasto.lisaa_varastoon(4)
+
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 6)
+
+        self.varasto.ota_varastosta(2)
+
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 8)
+    
+    def test_adding_negative_balance(self):
+        initial = self.varasto.saldo
+
+        self.varasto.lisaa_varastoon(-5)
+
+        self.assertAlmostEqual(self.varasto.saldo, initial)
+    
+    def test_removing_negative_balance(self):
+        initial = self.varasto.saldo
+
+        self.varasto.ota_varastosta(-5)
+
+        self.assertAlmostEqual(self.varasto.saldo, initial)
+
+    def test_adding_exactly_to_capacity(self):
+        self.varasto.lisaa_varastoon(7)
+
+        self.assertAlmostEqual(self.varasto.saldo, 7)
+
+        self.varasto.lisaa_varastoon(3)
+
+        self.assertAlmostEqual(self.varasto.saldo, 10)
+
+    def test_str_representation(self):
+        self.varasto.lisaa_varastoon(4)
+
+        expected = f"saldo = {self.varasto.saldo}, vielä tilaa {self.varasto.paljonko_mahtuu()}"
+
+        self.assertAlmostEqual(str(self.varasto), expected)
+
