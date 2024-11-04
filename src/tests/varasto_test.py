@@ -108,7 +108,7 @@ class TestVarasto(unittest.TestCase):
 
         self.varasto.lisaa_varastoon(3)
 
-        self.assertAlmostEqual(self.varasto.saldo, 10)
+        self.assertAlmostEqual(self.varasto.saldo, 5)
 
     def test_str_representation(self):
         self.varasto.lisaa_varastoon(4)
