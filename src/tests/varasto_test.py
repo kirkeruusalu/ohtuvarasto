@@ -95,11 +95,11 @@ class TestVarasto(unittest.TestCase):
         self.assertAlmostEqual(self.varasto.saldo, initial)
     
     def test_removing_negative_balance(self):
-        initial = self.varasto.saldo
+        first = self.varasto.saldo
 
         self.varasto.ota_varastosta(-5)
 
-        self.assertAlmostEqual(self.varasto.saldo, initial)
+        self.assertAlmostEqual(self.varasto.saldo, first)
 
     def test_adding_exactly_to_capacity(self):
         self.varasto.lisaa_varastoon(7)
